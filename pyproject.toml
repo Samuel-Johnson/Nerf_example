@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+description = "An example implementation of Nerual Radiance Fields (NeRF)"
+
+
+[project]
+name = "nerf_example"
+authors = [
+    {name = "Samuel Johnson", email = "samkahenjohnson@gmail.com"}
+]
+version = "1.0"
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "torch", 
+    "torchvision",
+    "lightning",
+    "numpy"
+]

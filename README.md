@@ -1,0 +1,1 @@
+an example implimentation of Neural Radiance Fields (NeRF) described in the paper NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis[text](https://doi.org/10.48550/arXiv.2003.08934)
