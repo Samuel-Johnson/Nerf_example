@@ -3,3 +3,4 @@ venv
 lightning_logs
 __.*__
 __pycache__
+tiny_nerf_data.npz

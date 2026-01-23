@@ -1,17 +1,19 @@
-from sympy.logic import true
 import torch
 from utils import exclusive_cum_prod
 
 def stratified_sampling(N, near, far, noise=False):
     """stratified sampling
 
-    Parameters:
+    Args:
         N (int): number of a bins 
-        near [batch_size, H, W]: near bound
-        far [batch_size, H, W]: far bound. bound_near < bound_far for all elements
+        near (torch.Tensor): near bound
+            size: (batch_size, H, W)
+        far (torch.Tensor): far bound. bound_near < bound_far for all elements
+            size: (batch_size, H, W)
 
     Returns:
-        t [batch_size, H, W, N]: lengths
+        torch.Tensor: ray lengths
+            size: (batch_size, H, W, N)
     """
     batch_size = near.shape[0]
     t = torch.linspace(0.0, 1.0, N + 1)[:-1]
@@ -30,13 +32,18 @@ def stratified_sampling(N, near, far, noise=False):
 def render(model, rays_o, rays_d, bounds, N_c=64 ):
     """
 
-    Parameters:
+    Args:
         model (torch.nn.Module): the model to query points for color and density
-        rays_o [batch_size, H, W, 3]: ray origins
-        rays_d [btach_size, H, W, 3]: ray directions
+        rays_o (torch.Tensor): ray origins
+            size: (batch_size, H, W, 3)
+        rays_d (torch.Tensor): ray directions
+            size: (batch_size, H, W, 3)
         bounds: [near, far] each a tensor of shape [batch_size, H, W]
-        N_c: the number of points to query along each ray
+        N_c (int): the number of points to query along each ray
 
+    Returns:
+        torch.Tensor: 
+            size:  (batch_size, H, W)
     """
     near = bounds[0]
     far = bounds[1]
@@ -56,19 +63,22 @@ def volume_render(t, c_i, sigma_i):
     """volume rendering routine
 
     Parameters:
-        c_i: the ith rgb color vector with components on interval [-1.0, 1.0]
-            [batch_size, N, 3]
-        sigma_i: the ith density
-            [batch_size, N, 3]
-        t: the ith length of the ray passing through the volume. 
-            These are in accending order of length. [batch_size, N]
+        c_i (torch.Tensor): the ith rgb color vector with components on interval [-1.0, 1.0]
+            size: (batch_size, N, 3)
+        sigma_i (torch.Tensor): the ith density
+            size: (batch_size, N, 3)
+        t (torch.Tensor): the ith length of the ray passing through the volume. 
+            These are in accending order of length.
+            size: (batch_size, N)
 
     Returns:
-        C_hat: the rendered rgb color vector. [batch_size, 3]
+        C_hat: the rendered rgb color vector.
+            size: (batch_size, 3)
         w_i: weight of each color along the ray.
             this ends up being the product T_i * alpha_i
-            [batch_size, N]
-        alpha_i: the ith transparency. [batch_size, N]
+            size: (batch_size, N)
+        alpha_i: the ith transparency.
+            size: (batch_size, N)
     """
 
     #take the last distance be from infinity (which apparently is 1e10 ¯\_(ツ)_/¯)

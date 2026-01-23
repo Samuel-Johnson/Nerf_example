@@ -4,8 +4,18 @@ from torch import nn
 from collections import OrderedDict
 
 class TinyNet(nn.Module):
+    """
+    Fully connected neural network as decribed in the paper.
+    """
+    def __init__(self, L_x=6, L_d=4):
+        """
+        
+        Args:
+            L_x (int):
 
-    def __init__(self, L_x=6, L_d=4, real=False):
+            L_d (int):
+
+        """
         super().__init__()
         self.net_1 = nn.Sequential(
             OrderedDict(
@@ -42,11 +52,16 @@ class TinyNet(nn.Module):
 
 
     def gamma(self, p, L):
-        """Positional encoding
+        """Positional encoding as described in the paper.
         
-        Paramters:
-            p : [batch_size, N_c, 3] 
-            l (int):
+        Args:
+            p (torch.Tensor): the entries on which to apply the encoding function.
+                shape:(batch_size, N_c, 3)
+            l (int): the size along the new axis .
+
+        Returns:
+            torch.Tensor: the encoded tensor.
+                shape: (batch_size, N_c, 3, L)
         """
         #assert len(p.shape) == 3, f"input to gamma is of shape {p.shape}"
         powers = torch.full(size=(L,), fill_value=2.0) ** torch.arange(L)
@@ -68,6 +83,21 @@ class TinyNet(nn.Module):
 
 
     def forward(self, x, d):
+        """
+        The forward pass of the network.
+
+        Args:
+            x (torch.Tensor): The position in space to predict the color and density.
+
+            d (torch.Tensor): The direction the ray at the corresponding point.
+
+        Returns:
+            torch.Tensor: RGB color at the corresponding point. C hat in the paper.
+                shape: same shape as x 
+            
+            torch.Tensor: density of each corresponding point. sigma in the paper.
+                shape: #TODO
+        """
         gamma_x = self.gamma(x, L=6)
         
         output = self.net_1(gamma_x)
