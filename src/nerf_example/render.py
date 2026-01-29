@@ -1,5 +1,5 @@
 import torch
-from utils import exclusive_cum_prod
+from nerf_example.utils import exclusive_cum_prod
 
 def stratified_sampling(N, near, far, noise=False):
     """stratified sampling

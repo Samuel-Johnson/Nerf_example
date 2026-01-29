@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from utils import get_rays
+from nerf_example.utils import get_rays
 
 
 def create_dataset(path="tiny_nerf_data.npz", hold_out=False):
