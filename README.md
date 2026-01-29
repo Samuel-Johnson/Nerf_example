@@ -5,7 +5,7 @@
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-an example implimentation of Neural Radiance Fields (NeRF) described in the paper NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis [paper](https://doi.org/10.48550/arXiv.2003.08934) (Ben Mildenhall et al., 2020).
+An example implimentation of Neural Radiance Fields (NeRF) described in the paper NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis [paper](https://doi.org/10.48550/arXiv.2003.08934) (Ben Mildenhall et al., 2020).
 
 
 
