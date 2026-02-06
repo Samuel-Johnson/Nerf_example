@@ -5,7 +5,7 @@ from nerf_example.network import TinyNet
 from nerf_example.render import render
 from nerf_example.datasets import create_dataset
 
-class SimpleLit(L.LightningModule):
+class Demo(L.LightningModule):
 
     def __init__(self, network):
         super().__init__()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     network = TinyNet()
 
-    lit_module = SimpleLit(network=network)
+    lit_module = Demo(network=network)
     
     trainer = L.Trainer(limit_train_batches=100, max_epochs=25)
     trainer.fit(model=lit_module, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
